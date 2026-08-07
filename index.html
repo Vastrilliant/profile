@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="color-scheme" content="dark only">
+<meta name="description" content="O Fortuna velut luna statu variabilis, semper crescis aut decrescis; vita detestabilis nunc obdurat et tunc curat ludo mentis aciem, egestatem, potestatem dissolvit ut glaciem.">
+<meta name="theme-color" content="#F2DEFF">
+<meta property="og:title" content="Trillians Aeternum">
+<meta property="og:image" content="https://raw.githubusercontent.com/Vastrilliant/profile/refs/heads/main/images/IDG_20260218_073938_402.jpeg">
+<meta property="og:description" content="O Fortuna velut luna statu variabilis, semper crescis aut decrescis; vita detestabilis nunc obdurat et tunc curat ludo mentis aciem, egestatem, potestatem dissolvit ut glaciem.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Vastrilliant/profile/refs/heads/main/images/IDG_20260218_073938_402.jpeg">
+<title>Writings of a colorless epitome</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+  :root {
+    --bg: #000000;
+    --accent: #f2deff;
+    --accent-soft: #d5c3e0;
+    --text: #ffffff;
+    --text-muted: #d6d6d6;
+    --border: #e4daf0;
+  }
+
+  * { box-sizing: border-box; }
+
+  .bg-gradient-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .bg-gradient-overlay.active {
+    opacity: 0.6;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .audio-toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+    outline: none;
+    min-width: 135px;
+  }
+
+  @media (hover: hover) {
+    .audio-toggle-btn:hover,
+    .enter-btn:hover,
+    .submit-btn:hover,
+    .attachment-btn:hover,
+    .playlist-play-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(242, 222, 255, 0.25);
+    }
+  }
+
+  .audio-toggle-btn:active,
+  .enter-btn:active,
+  .submit-btn:active,
+  .attachment-btn:active,
+  .playlist-play-btn:active,
+  .audio-toggle-btn.tap-active,
+  .enter-btn.tap-active,
+  .submit-btn.tap-active,
+  .attachment-btn.tap-active,
+  .playlist-play-btn.tap-active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(242, 222, 255, 0.25);
+  }
+
+  #splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s ease;
+    text-align: center;
+    padding: 24px;
+  }
+
+  #splash-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .splash-image {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0px;
+    object-fit: contain;
+  }
+
+
+  .enter-btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 24px 100px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.2s ease 0.3s, transform 0.5s ease 0.3s;
+  }
+
+  .wrap.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  header.hero {
+    text-align: center;
+    margin-bottom: 0px;
+  }
+
+  h1.name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(36px, 7vw, 48px);
+    color: var(--accent);
+    margin: 0 0 0px;
+    letter-spacing: 0.5px;
+    transition: color 1s ease;
+  }
+
+  p.pronunciation {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 48px 0;
+    color: var(--text);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: var(--text);
+  }
+  .divider span { font-size: 15px; letter-spacing: 2px; color: var(--text);}
+
+  h2.section-title {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    text-align: center;
+    margin: 0 0 28px;
+    transition: color 1s ease;
+  }
+
+  section p { margin: 0 0 18px; font-size: 16px; }
+
+  .names-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 18px;
+  }
+  .names-list li {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .names-list li span { color: var(--accent-soft); margin-right: 8px; transition: color 1s ease; }
+
+  .aside-note { font-size: 15px; color: var(--text-muted); margin-top: -8px; }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s, color 1s ease;
+  }
+  a:hover, a:focus-visible { text-decoration-color: var(--accent); }
+
+  strong { color: var(--accent); font-weight: 600; transition: color 1s ease; }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .subject-input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .subject-input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .subject-input:focus::placeholder {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .subject-input:focus {
+    border-color: var(--accent);
+  }
+
+  .submit-btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: center;
+    min-width: 170px;
+    outline: none;
+  }
+
+  #form-status {
+    font-size: 12px;
+    text-align: center;
+    color: var(--accent);
+    letter-spacing: 1px;
+    min-height: 18px;
+    transition: color 1s ease;
+  }
+
+  footer.sig {
+    text-align: center;
+    margin-top: 64px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .visit-counter {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 7px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-family: 'Work Sans', sans-serif;
+    opacity: 0.75;
+  }
+
+  .visit-counter span {
+    color: var(--accent);
+    font-weight: 600;
+    transition: color 1s ease;
+  }
+
+
+  .textarea-wrapper {
+    position: relative;
+    width: 100%;
+    border: 1px solid var(--border);
+    background: transparent;
+    transition: border-color 0.3s;
+  }
+
+  .textarea-wrapper:focus-within {
+    border-color: var(--accent);
+  }
+
+  .textarea-wrapper textarea {
+    width: 100%;
+    height: 220px;
+    background: transparent;
+    border: none !important;
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    padding: 14px;
+    resize: vertical;
+    outline: none;
+    display: block;
+    margin: 0;
+  }
+
+  .textarea-wrapper textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+
+  .textarea-wrapper textarea:focus::placeholder {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+
+  .attachment-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: var(--bg);
+    box-shadow: inset 0 0 0 0.5px var(--border);
+    color: var(--text);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+    min-width: 145px;
+  }
+
+  .attachment-btn.has-file {
+    color: var(--bg);
+    background: var(--accent);
+    box-shadow: inset 0 0 0 0.5px var(--accent);
+  }
+
+
+  @keyframes riseUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    100% {
+      opacity: 0.85;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes sinkDown {
+    0% {
+      opacity: 0.85;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+  }
+
+
+  @keyframes fadeInText {
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes fadeOutText {
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .file-preview-container {
+    position: absolute;
+    bottom: 38px;
+    right: 12px;
+    width: 130px;
+    max-height: 80px;
+    background: var(--bg);
+    box-shadow: inset 0 0 0 0.5px var(--border);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+    opacity: 0;
+  }
+
+  .file-preview-container.active {
+    display: flex;
+    animation: riseUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .file-preview-container.closing {
+    animation: sinkDown 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+  }
+
+  .file-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.75;
+  }
+
+  .file-preview-placeholder {
+    width: 100%;
+    height: 80px;
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: inset 0 0 0 0.5px var(--border);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+  }
+
+  .file-status-display {
+    font-size: 11px;
+    color: var(--accent-soft);
+    text-align: right;
+    margin-top: -8px;
+    font-style: italic;
+    height: 16px;
+    line-height: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+  }
+
+  .file-status-display.active {
+    animation: fadeInText 0.5s ease forwards;
+  }
+
+  .file-status-display.closing {
+    animation: fadeOutText 0.2s ease forwards;
+  }
+
+
+  .subject-input.field-error,
+  .textarea-wrapper.field-error {
+    border-color: #ff2b2b;
+  }
+
+
+  .file-preview-container,
+  .file-preview-placeholder {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .attachment-btn.file-error,
+  .attachment-btn.has-file.file-error {
+    background: var(--bg);
+    color: #ff2b2b;
+    box-shadow: inset 0 0 0 0.5px #ff2b2b;
+  }
+
+  .file-preview-container.file-error,
+  .file-preview-container.file-error .file-preview-placeholder {
+    box-shadow: inset 0 0 0 0.5px #ff2b2b;
+  }
+
+
+  .playlist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px 0 8px;
+  }
+
+  .playlist-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .playlist-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .playlist-item.is-playing {
+    border-color: var(--accent);
+  }
+
+  .playlist-play-btn {
+    flex: 0 0 auto;
+    background: transparent;
+    color: var(--text);
+    box-shadow: inset 0 0 0 0.5px var(--border);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 9px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    min-width: 84px;
+    text-align: center;
+  }
+
+  .playlist-play-btn.is-stop-state {
+    background: #ff2b2b;
+    color: var(--bg);
+    box-shadow: inset 0 0 0 0.5px #ff2b2b;
+  }
+
+  @media (hover: hover) {
+    .playlist-play-btn.is-stop-state:hover {
+      background: #ff2b2b;
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(255, 43, 43, 0.35), inset 0 0 0 0.5px #ff2b2b;
+    }
+  }
+
+  .playlist-play-btn.is-stop-state.tap-active {
+    background: #ff2b2b;
+    color: var(--bg);
+    box-shadow: 0 0 15px rgba(255, 43, 43, 0.35), inset 0 0 0 0.5px #ff2b2b;
+  }
+
+  .playlist-thumb {
+    flex: 0 0 auto;
+    width: 52px;
+    height: 52px;
+    box-shadow: inset 0 0 0 0.5px var(--border);
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 1s ease;
+  }
+
+  .playlist-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .playlist-thumb-fallback {
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .playlist-info {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .playlist-song-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .playlist-artist-name {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  .playlist-progress-track {
+    height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.16);
+    transition: height 0.35s ease, margin-top 0.35s ease, opacity 0.25s ease;
+  }
+
+  .playlist-item.is-playing .playlist-progress-track {
+    height: 3px;
+    margin-top: 9px;
+    opacity: 1;
+  }
+
+  .playlist-progress-fill {
+    height: 100%;
+    width: 0%;
+
+    background: var(--progress-fill, var(--accent));
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+    transition: width 0.2s linear, background-color 1s ease;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 56px 20px 80px; }
+    .audio-toggle-btn { top: 12px; left: 12px; padding: 6px 12px; font-size: 10px; }
+    .playlist-item { padding: 8px 10px; }
+    .playlist-row { gap: 10px; }
+    .playlist-play-btn { min-width: 60px; font-size: 10px; padding: 8px 6px; }
+    .playlist-thumb { width: 42px; height: 42px; }
+    .playlist-song-name { font-size: 13px; }
+    .playlist-artist-name { font-size: 11px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div id="bg-gradient-a" class="bg-gradient-overlay"></div>
+<div id="bg-gradient-b" class="bg-gradient-overlay"></div>
+
+<audio id="bg-audio" src="songs/background_music.mp3" preload="none" loop></audio>
+<audio id="playlist-audio-b" preload="none"></audio>
+
+<button id="audio-toggle-btn" class="audio-toggle-btn">「 Mute 」</button>
+
+<div id="splash-screen">
+  <img src="images/signature.png" alt="Splash Image" class="splash-image">
+  <button id="enter-btn" class="enter-btn">「 Enter 」</button>
+</div>
+
+<div class="wrap" id="main-content">
+
+  <header class="hero">
+    <h1 class="name">Trillians Aeternum</h1>
+    <p class="pronunciation">/ˈtrɪliənz aɪˈtɜːrnəm/</p>
+  </header>
+
+  <div class="divider"><span>§</span></div>
+
+  <section>
+    <h2 class="section-title">General Info</h2>
+    <p>
+      I'm <span id="user-age">18</span> years old.<br>
+      My birthday's on May 15th, 2008.<br>
+      I'm Chinese.<br>
+      I'm fluent in English, Spanish (native) and <a href="https://en.wikipedia.org/wiki/Hakka_Chinese" target="_blank" rel="noopener">Spoken Hakka (Chinese dialect.)</a>
+    </p>
+    <p>To some degree, I'm also knowledgeable of other Chinese dialects such as Mandarin and Cantonese -- however those are mostly mere remnants from my childhood when I used to live in Mainland China. I don't practice them anymore.</p>
+    <p>Online names I usually go by:</p>
+    <ul class="names-list">
+      <li><span>§</span>Trilliance</li>
+      <li><span>§</span>Trilliance143</li>
+      <li><span>§</span>Vastrilliant</li>
+      <li><span>§</span>EclipseofScarletMoths</li>
+    </ul>
+    <p class="aside-note">(Or any other Variation)</p>
+  </section>
+
+  <div class="divider"><span>§</span></div>
+
+  <section>
+    <h2 class="section-title">Interests</h2>
+    <p>
+      Mangas &amp; Light Novels of all kind, I'm well versed in a variety of genres, such as: Action, Psychological Horror, Drama, Romcoms, Sci-Fi, Mystery, etc.<br>
+      Favorite Works: <a href="https://anilist.co/manga/194193/Break-New-World/" target="_blank" rel="noopener">Break New World</a>, <a href="https://anilist.co/manga/86848/Oemo-Jisangjuui/" target="_blank" rel="noopener">Lookism</a>, <a href="https://anilist.co/manga/180647/Kimi-wa-Yotsuba-no-Clover" target="_blank" rel="noopener">You are a Four-leaf Clover</a>, <a href="https://anilist.co/manga/119363/Player/" target="_blank" rel="noopener">Player</a>, <a href="https://anilist.co/manga/145684/Yeoubi-Naerineun-Nare" target="_blank" rel="noopener">In the Sunshower.</a>
+    </p>
+    <p>
+      I'm really into Music as well, specifically on genres like Hyperpop, Shoegaze, Indie Pop &amp; Alt Rock. You can find my last.fm profile <a href="https://last.fm/user/trilliance143" target="_blank" rel="noopener">here.</a><br>
+      Favorite Artists: <a href="https://open.spotify.com/artist/6qKNO74t6cNcytBKSunEcW" target="_blank" rel="noopener">Cybertrash</a>, <a href="https://open.spotify.com/artist/6fHEaFnFgMxMAtDt7mFoQ3" target="_blank" rel="noopener">Tsubi Club</a>, <a href="https://open.spotify.com/artist/2VxINnkFPw2Sd6MiyKxN4B" target="_blank" rel="noopener">Otuka</a>, <a href="https://open.spotify.com/artist/5cpCYa1BaBS52GrkmLob1u" target="_blank" rel="noopener">Jades714</a>, <a href="https://open.spotify.com/artist/5YfZjShz51htJsfQP0YceU" target="_blank" rel="noopener">Juno</a>, <a href="https://open.spotify.com/artist/6mx3Y8XNLPaS2pjJbQFq3W" target="_blank" rel="noopener">Bunii</a>, <a href="https://open.spotify.com/artist/2HZdGdSg7eDyKsslJfWjtv" target="_blank" rel="noopener">Amotti</a>, <a href="https://open.spotify.com/artist/5v3DEzWuRDahVpFHd4Iy8c" target="_blank" rel="noopener">Thorne</a>, <a href="https://open.spotify.com/artist/5nbANTHT9CokGhD9o0VPIA?si=1M5HABf0SHyJk7P6lrvZGA&amp;utm_source=copy-link" target="_blank" rel="noopener">Aeris404</a>, <a href="https://open.spotify.com/artist/5Jf6pl4SGgueZHZ4pC313c" target="_blank" rel="noopener">Heylog</a>, <a href="https://open.spotify.com/artist/3GiFHWh1DzCfLmiKrnDgSK" target="_blank" rel="noopener">Logan.</a>
+    </p>
+    <p>Utterly hyperfixated on the number 143, it is my lord and savior. I would not be here today without 143's blessing -- I will live and die by the grace of 143.</p>
+  </section>
+
+  <div class="divider"><span>§</span></div>
+
+  <section>
+    <h2 class="section-title">Disclaimers</h2>
+    <p>If you came here from TikTok or any other social media on which I have a presence, unless you're someone I'm familiar with; <strong>please do not attempt to form a friendship with me unprompted.</strong> You may send me a message or a video on my DMs occasionally -- but refrain from going beyond that, such as messaging me daily or god forbid starting a streak. I apologize if this comes off as rude or hostile. I am an extremely reserved person; I dislike the thought of talking to someone I'm not familiar with on the daily, just please don't.</p>
+    <p>Do not vent to me. I have no intention to, and will not help you or give you any sort of emotional refuge and solace with your problems -- regardless of our level of acquaintance. It is tiring to constantly comfort someone to the point where it is an expectation. It places an unnecessary burden on me that it'd rather not deal with.</p>
+    <p>Refrain from attempting any sort of romantical advances on me, I am unable to see anyone as a potential romantic interest online. Furthermore I'd rather not engage in such an ultimately pointless activity.</p>
+  </section>
+
+  <div class="divider"><span>§</span></div>
+
+  <section>
+    <h2 class="section-title">My Favorite Songs</h2>
+    <div class="playlist-list" id="playlist-list">
+
+      <div class="playlist-item" data-track-src="songs/song-1.mp3" data-theme-color="#b07833">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-1.jpeg" alt="Song 1 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">End of Times</div>
+            <div class="playlist-artist-name">Cybertrash - Single</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-2.mp3" data-theme-color="#deba21">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-2.jpeg" alt="Song 2 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">lil qoo</div>
+            <div class="playlist-artist-name">tsubi club - trinket</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-3.mp3" data-theme-color="#7d0a0a">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-3.jpeg" alt="Song 3 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Open Your Eyes</div>
+            <div class="playlist-artist-name">Otuka - Single</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-4.mp3" data-theme-color="#f2a6bf">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-4.jpeg" alt="Song 4 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Nothing left to say</div>
+            <div class="playlist-artist-name">Jades714 - Single</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-5.mp3" data-theme-color="#e8e6e3">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-5.jpeg" alt="Song Cover 5 Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Temporary Crush</div>
+            <div class="playlist-artist-name">Juno - NewLove</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-6.mp3" data-theme-color="#053894">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-6.jpeg" alt="Song 6 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Amnesia</div>
+            <div class="playlist-artist-name">Bunii - VIRGILIO</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-7.mp3" data-theme-color="#665959">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-7.jpeg" alt="Song 7 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Without You</div>
+            <div class="playlist-artist-name">Amotti, Aeris404 - Heaven, for a moment</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-8.mp3" data-theme-color="#f24f29">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-8.jpeg" alt="Song 8 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Ignorance</div>
+            <div class="playlist-artist-name">Thorne - Sea Lion</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-9.mp3" data-theme-color="#663312">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-9.jpeg" alt="Song 9 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Remember me when you're gone</div>
+            <div class="playlist-artist-name">Aeris404 - Single</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-10.mp3" data-theme-color="#87c2cc">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-10.jpeg" alt="Song 10 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Paranoid</div>
+            <div class="playlist-artist-name">Heylog - eve</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-11.mp3" data-theme-color="#7d7578">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-11.jpeg" alt="Song 11 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Achilles</div>
+            <div class="playlist-artist-name">logan - angels</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+      <div class="playlist-item" data-track-src="songs/song-12.mp3" data-theme-color="#751c21">
+        <div class="playlist-row">
+          <div class="playlist-thumb">
+            <img src="covers/song-cover-12.jpeg" alt="Song 12 Cover Placeholder" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="playlist-thumb-fallback">IMG</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-song-name">Jealousy</div>
+            <div class="playlist-artist-name">B Murph, Heylog - Single</div>
+          </div>
+          <button type="button" class="playlist-play-btn">「 Play 」</button>
+        </div>
+        <div class="playlist-progress-track"><div class="playlist-progress-fill"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><span>§</span></div>
+
+  <section>
+    <h2 class="section-title">Anonymously Send me a Message via email</h2>
+    <form id="contact-form" class="contact-form" action="https://formsubmit.co/c73fe94505a645e4efa05193d5d3d609" method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="">
+            <input type="hidden" name="sender_id" value="">
+
+            <input type="text" name="_subject" id="msg-subject" class="subject-input" placeholder="Subject Field">
+
+      <div class="textarea-wrapper" id="textarea-wrapper">
+        <textarea name="message" id="message-text" placeholder="There is a one-hour cooldown between submissions to prevent spam -- use yours wisely.&#10;&#10;Individuals that send me weird shit will be permanently IP-Banned, don't even try.&#10;&#10;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."></textarea>
+
+                <input type="file" id="file-upload" name="attachment" style="display: none;">
+
+                <div id="file-preview-container" class="file-preview-container">
+          <img id="file-preview-img" src="" alt="Preview" style="display: none;">
+          <div id="file-preview-placeholder" class="file-preview-placeholder" style="display: none;">「 NO PREVIEW 」</div>
+        </div>
+
+                <label for="file-upload" class="attachment-btn" id="attachment-label">「 Attach File 」</label>
+      </div>
+
+      <div id="file-status-display" class="file-status-display"></div>
+
+      <button type="submit" id="msg-submit-btn" class="submit-btn">「 Send 」</button>
+      <div id="form-status"></div>
+    </form>
+        <iframe name="formsubmit-frame" id="formsubmit-frame" title="Message submission" style="display:none;"></iframe>
+  </section>
+
+  <footer class="sig">Sors immaniset inanis, rota tu volubilis, status malus, vana salussemper dissolubilis, obumbrataet velatamichi quoque niteris; nunc per ludumdorsum nudumfero tui sceleris.</footer>
+
+  <div class="visit-counter">
+    This page has been visited <span id="visit-count">--</span> times.
+  </div>
+
+</div>
+
+<script>
+
+  async function getFingerprint() {
+    const parts = [];
+
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 220; canvas.height = 30;
+      const ctx = canvas.getContext('2d');
+      ctx.textBaseline = 'top';
+      ctx.font = '14px Arial';
+      ctx.fillStyle = '#f60';
+      ctx.fillRect(0, 0, 100, 20);
+      ctx.fillStyle = '#069';
+      ctx.fillText('fingerprint-check,0123456789', 2, 15);
+      parts.push('canvas:' + canvas.toDataURL());
+    } catch (e) { parts.push('canvas:na'); }
+
+    try {
+      const gl = document.createElement('canvas').getContext('webgl');
+      const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+      parts.push('gl:' + gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) + '|' + gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL));
+    } catch (e) { parts.push('gl:na'); }
+
+    try {
+      const ctx = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 44100, 44100);
+      const osc = ctx.createOscillator();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(10000, ctx.currentTime);
+      const compressor = ctx.createDynamicsCompressor();
+      osc.connect(compressor); compressor.connect(ctx.destination);
+      osc.start(0);
+      const buffer = await ctx.startRendering();
+      let sum = 0;
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i += 100) sum += Math.abs(data[i]);
+      parts.push('audio:' + sum.toFixed(6));
+    } catch (e) { parts.push('audio:na'); }
+
+    try {
+      const testFonts = ['Arial', 'Verdana', 'Times New Roman', 'Courier New', 'Georgia', 'Comic Sans MS'];
+      const span = document.createElement('span');
+      span.style.cssText = 'position:absolute;left:-9999px;font-size:72px;';
+      span.textContent = 'mmmmmmmmmmlli';
+      document.body.appendChild(span);
+      const widths = testFonts.map((f) => { span.style.fontFamily = f + ', monospace'; return span.offsetWidth; });
+      document.body.removeChild(span);
+      parts.push('fonts:' + widths.join(','));
+    } catch (e) { parts.push('fonts:na'); }
+
+    parts.push('nav:' + [
+      navigator.hardwareConcurrency || '',
+      navigator.deviceMemory || '',
+      navigator.platform || '',
+      navigator.language || '',
+      (navigator.languages || []).join(','),
+      screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
+      Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+      navigator.maxTouchPoints || 0,
+    ].join('|'));
+
+    const raw = parts.join('###');
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+    return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const safeStorage = {
+      getItem: (key) => {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+      },
+      setItem: (key, val) => {
+        try { localStorage.setItem(key, val); } catch (e) {}
+      }
+    };
+
+    const splashScreen = document.getElementById('splash-screen');
+    const enterBtn = document.getElementById('enter-btn');
+    const mainContent = document.getElementById('main-content');
+    const bgAudio = document.getElementById('bg-audio');
+    const audioToggleBtn = document.getElementById('audio-toggle-btn');
+    const playlistAudioB = document.getElementById('playlist-audio-b');
+    const contactForm = document.getElementById('contact-form');
+    const msgSubmitBtn = document.getElementById('msg-submit-btn');
+    const formStatus = document.getElementById('form-status');
+    const messageText = document.getElementById('message-text');
+    const msgSubject = document.getElementById('msg-subject');
+
+    let hasEntered = false;
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const TAP_HIGHLIGHT_MS = 500;
+    const FIELD_ERROR_MS = 1000;
+    const highlightTimeouts = new WeakMap();
+
+    function flashHighlight(el, className, duration) {
+      el.classList.add(className);
+      clearTimeout(highlightTimeouts.get(el));
+      highlightTimeouts.set(el, setTimeout(() => el.classList.remove(className), duration));
+    }
+
+    function flashTap(el) {
+      flashHighlight(el, 'tap-active', TAP_HIGHLIGHT_MS);
+    }
+
+    function flashFieldError(el) {
+      flashHighlight(el, 'field-error', FIELD_ERROR_MS);
+    }
+
+    function afterNextPaint(fn) {
+      requestAnimationFrame(() => requestAnimationFrame(fn));
+    }
+
+    const CROSSFADE_MS = 1000;
+    let activeChannel = bgAudio;
+    let idleChannel = playlistAudioB;
+    let audioMuted = false;
+
+    function safePlayAudio(el) {
+      const audioEl = el || activeChannel;
+      if (!audioEl) return;
+      const playPromise = audioEl.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {});
+      }
+    }
+
+    function applyMuteState() {
+      if (activeChannel) activeChannel.muted = audioMuted;
+      if (idleChannel) idleChannel.muted = audioMuted;
+    }
+
+    [bgAudio, playlistAudioB].forEach((el) => {
+      if (!el) return;
+      el.addEventListener('error', () => {
+        console.warn('Audio track could not be loaded.');
+      });
+    });
+
+    function fadeVolume(audioEl, targetVolume, duration) {
+      return new Promise((resolve) => {
+        if (!audioEl) { resolve(); return; }
+
+        const token = (audioEl._fadeToken = (audioEl._fadeToken || 0) + 1);
+        const startVolume = audioEl.volume;
+        const startTime = performance.now();
+        function step(now) {
+          if (audioEl._fadeToken !== token) { resolve(); return; }
+          const progress = Math.min((now - startTime) / duration, 1);
+          audioEl.volume = startVolume + (targetVolume - startVolume) * progress;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            if (audioEl._fadeToken === token) {
+              audioEl.volume = targetVolume;
+              if (targetVolume === 0) audioEl.pause();
+            }
+            resolve();
+          }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    function crossfadeTo(newSrc, loop) {
+      const incoming = idleChannel;
+      const outgoing = activeChannel;
+      if (!incoming || !outgoing) return Promise.resolve();
+
+      incoming._fadeToken = (incoming._fadeToken || 0) + 1;
+      incoming.pause();
+      incoming.loop = !!loop;
+      incoming.muted = audioMuted;
+      incoming.volume = 0;
+      incoming.src = newSrc;
+      incoming.currentTime = 0;
+      incoming.load();
+      safePlayAudio(incoming);
+
+      const fades = Promise.all([
+        fadeVolume(incoming, 1, CROSSFADE_MS),
+        fadeVolume(outgoing, 0, CROSSFADE_MS),
+      ]);
+
+      activeChannel = incoming;
+      idleChannel = outgoing;
+
+      return fades;
+    }
+
+    audioToggleBtn.addEventListener('click', () => {
+      flashTap(audioToggleBtn);
+      audioMuted = !audioMuted;
+      applyMuteState();
+      audioToggleBtn.textContent = audioMuted ? '「 Unmute 」' : '「 Mute 」';
+    });
+
+    const rootStyle = document.documentElement.style;
+    const bgGradientLayers = [document.getElementById('bg-gradient-a'), document.getElementById('bg-gradient-b')];
+    let activeGradientIndex = 0;
+
+    let glowLayerEl = null;
+    let glowBaseHex = null;
+    let glowAnimId = null;
+
+    function buildGlowBackground(baseHex, glowX, glowY, glowSize) {
+      const core = hexToRgba(baseHex, 0.5);
+      const mid = hexToRgba(baseHex, 0.24);
+      const edge = hexToRgba(baseHex, 0);
+      return `linear-gradient(to bottom, #000 0%, #000 2%, rgba(0,0,0,0.65) 6%, rgba(0,0,0,0.25) 10%, transparent 14%, transparent 86%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0.65) 94%, #000 98%, #000 100%), radial-gradient(circle at ${glowX}% ${glowY}%, ${core} 0%, ${mid} ${glowSize * 0.45}%, ${edge} ${glowSize}%)`;
+    }
+
+    function stepGlowAnimation(timestamp) {
+      if (!glowLayerEl || !glowBaseHex) return;
+      const t = timestamp / 1000;
+      const glowX = 50 + Math.sin(t * (2 * Math.PI / 22)) * 7;
+      const glowY = 50 + Math.sin(t * (2 * Math.PI / 17) + 1.3) * 6;
+      const glowSize = 150 + Math.sin(t * (2 * Math.PI / 13) + 2.1) * 30;
+      glowLayerEl.style.background = buildGlowBackground(glowBaseHex, glowX, glowY, glowSize);
+      glowAnimId = requestAnimationFrame(stepGlowAnimation);
+    }
+
+    function startGlowAnimation(layerEl, baseHex) {
+      glowLayerEl = layerEl;
+      glowBaseHex = baseHex;
+      if (glowAnimId) cancelAnimationFrame(glowAnimId);
+      glowAnimId = requestAnimationFrame(stepGlowAnimation);
+    }
+
+    function stopGlowAnimation() {
+      if (glowAnimId) {
+        cancelAnimationFrame(glowAnimId);
+        glowAnimId = null;
+      }
+      glowLayerEl = null;
+      glowBaseHex = null;
+    }
+
+    function hexToRgb(hex) {
+      const clean = hex.replace('#', '');
+      const bigint = parseInt(clean, 16);
+      return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
+    }
+
+    function hexToRgba(hex, alpha) {
+      const { r, g, b } = hexToRgb(hex);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function rgbToHex({ r, g, b }) {
+      const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
+      return '#' + [r, g, b].map((v) => clamp(v).toString(16).padStart(2, '0')).join('');
+    }
+
+    function mixHex(hex, towardHex, amount) {
+      const c1 = hexToRgb(hex);
+      const c2 = hexToRgb(towardHex);
+      return rgbToHex({
+        r: c1.r + (c2.r - c1.r) * amount,
+        g: c1.g + (c2.g - c1.g) * amount,
+        b: c1.b + (c2.b - c1.b) * amount,
+      });
+    }
+
+    function darkenHex(hex, amount) { return mixHex(hex, '#000000', amount); }
+    function lightenHex(hex, amount) { return mixHex(hex, '#ffffff', amount); }
+
+    function applyThemeColor(baseHex) {
+      if (!baseHex) return;
+
+      rootStyle.setProperty('--accent', lightenHex(baseHex, 0.25));
+      rootStyle.setProperty('--accent-soft', lightenHex(baseHex, 0.45));
+      rootStyle.setProperty('--border', lightenHex(baseHex, 0.15));
+      rootStyle.setProperty('--progress-fill', progressFillHex(baseHex));
+
+      const incoming = bgGradientLayers[1 - activeGradientIndex];
+      const outgoing = bgGradientLayers[activeGradientIndex];
+      if (incoming) {
+
+        incoming.style.background = buildGlowBackground(baseHex, 50, 50, 150);
+        void incoming.offsetWidth;
+        incoming.classList.add('active');
+        startGlowAnimation(incoming, baseHex);
+      }
+      if (outgoing) outgoing.classList.remove('active');
+      activeGradientIndex = 1 - activeGradientIndex;
+    }
+
+    function resetThemeColor() {
+      rootStyle.removeProperty('--accent');
+      rootStyle.removeProperty('--accent-soft');
+      rootStyle.removeProperty('--border');
+      rootStyle.removeProperty('--progress-fill');
+      stopGlowAnimation();
+      bgGradientLayers.forEach((layer) => layer && layer.classList.remove('active'));
+    }
+
+    const DOMINANT_COLOR_CACHE = new Map();
+    const DOMINANT_SAMPLE_SIZE = 80;
+    const BLACK_CUTOFF = 28;
+    const QUANTIZE_STEP = 16;
+
+    function loadImageEl(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+        img.src = src;
+      });
+    }
+
+    function rgbToHsl({ r, g, b }) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      const l = (max + min) / 2;
+      if (max === min) return { h: 0, s: 0, l };
+      const d = max - min;
+      const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      let h;
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        default: h = (r - g) / d + 4;
+      }
+      return { h: h / 6, s, l };
+    }
+
+    function hslToRgb({ h, s, l }) {
+      if (s === 0) {
+        const v = Math.round(l * 255);
+        return { r: v, g: v, b: v };
+      }
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      return {
+        r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
+        g: Math.round(hue2rgb(p, q, h) * 255),
+        b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+      };
+    }
+
+    function progressFillHex(baseHex) {
+      const hsl = rgbToHsl(hexToRgb(baseHex));
+      const clampedL = Math.min(0.78, Math.max(0.42, hsl.l));
+      return rgbToHex(hslToRgb({ h: hsl.h, s: hsl.s, l: clampedL }));
+    }
+
+    function dominantColorFromImage(img) {
+      const canvas = document.createElement('canvas');
+      canvas.width = DOMINANT_SAMPLE_SIZE;
+      canvas.height = DOMINANT_SAMPLE_SIZE;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, DOMINANT_SAMPLE_SIZE, DOMINANT_SAMPLE_SIZE);
+
+      const { data } = ctx.getImageData(0, 0, DOMINANT_SAMPLE_SIZE, DOMINANT_SAMPLE_SIZE);
+      const buckets = new Map();
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+        if (a < 128) continue;
+        if (Math.max(r, g, b) < BLACK_CUTOFF) continue;
+
+        const key = [
+          Math.round(r / QUANTIZE_STEP),
+          Math.round(g / QUANTIZE_STEP),
+          Math.round(b / QUANTIZE_STEP),
+        ].join(',');
+
+        let bucket = buckets.get(key);
+        if (!bucket) {
+          bucket = { count: 0, r: 0, g: 0, b: 0 };
+          buckets.set(key, bucket);
+        }
+        bucket.count++;
+        bucket.r += r;
+        bucket.g += g;
+        bucket.b += b;
+      }
+
+      let best = null;
+      let bestScore = -Infinity;
+      buckets.forEach((bucket) => {
+        const avg = { r: bucket.r / bucket.count, g: bucket.g / bucket.count, b: bucket.b / bucket.count };
+        const { s, l } = rgbToHsl(avg);
+
+        const lightnessWeight = Math.max(0, 1 - Math.abs(l - 0.5) * 1.7);
+
+        const presenceWeight = Math.log(bucket.count + 1);
+
+        const score = s * s * lightnessWeight * presenceWeight;
+        if (score > bestScore) {
+          bestScore = score;
+          best = avg;
+        }
+      });
+      if (!best) return null;
+
+      return rgbToHex(best);
+    }
+
+    const THEME_COLOR_OVERRIDES = {
+      'lil qoo': '#999999',
+      'Paranoid': '#999999',
+      'Achilles': '#999999',
+    };
+
+    function getDominantColorForItem(item) {
+      const cacheKey = item.dataset.trackSrc;
+      if (DOMINANT_COLOR_CACHE.has(cacheKey)) {
+        return Promise.resolve(DOMINANT_COLOR_CACHE.get(cacheKey));
+      }
+
+      const songNameEl = item.querySelector('.playlist-song-name');
+      const songName = songNameEl ? songNameEl.textContent.trim() : '';
+      if (Object.prototype.hasOwnProperty.call(THEME_COLOR_OVERRIDES, songName)) {
+        const overrideHex = THEME_COLOR_OVERRIDES[songName];
+        DOMINANT_COLOR_CACHE.set(cacheKey, overrideHex);
+        return Promise.resolve(overrideHex);
+      }
+
+      const coverImg = item.querySelector('.playlist-thumb img');
+      const fallback = item.dataset.themeColor || '#f2deff';
+      const src = coverImg ? coverImg.getAttribute('src') : null;
+      if (!src) return Promise.resolve(fallback);
+
+      return loadImageEl(src)
+        .then((img) => dominantColorFromImage(img) || fallback)
+        .catch(() => fallback)
+        .then((hex) => {
+          DOMINANT_COLOR_CACHE.set(cacheKey, hex);
+          return hex;
+        });
+    }
+
+    const ORIGINAL_BG_SRC = bgAudio ? bgAudio.getAttribute('src') : '';
+    let activePlaylistItem = null;
+    let endedChannel = null;
+    let endedHandler = null;
+
+    function clearEndedWatch() {
+      if (endedChannel && endedHandler) {
+        endedChannel.removeEventListener('ended', endedHandler);
+      }
+      endedChannel = null;
+      endedHandler = null;
+    }
+
+    function resetPlaylistItem(item) {
+      const btn = item.querySelector('.playlist-play-btn');
+      if (btn) {
+        btn.textContent = '「 Play 」';
+        btn.classList.remove('is-stop-state');
+      }
+      item.classList.remove('is-playing');
+      const fill = item.querySelector('.playlist-progress-fill');
+      if (fill) fill.style.width = '0%';
+    }
+
+    let progressRafId = null;
+
+    function updateProgressBar() {
+      if (!activePlaylistItem || !activeChannel) {
+        progressRafId = null;
+        return;
+      }
+      const fill = activePlaylistItem.querySelector('.playlist-progress-fill');
+      if (fill && isFinite(activeChannel.duration) && activeChannel.duration > 0) {
+        const pct = Math.min(100, Math.max(0, (activeChannel.currentTime / activeChannel.duration) * 100));
+        fill.style.width = pct + '%';
+      }
+      progressRafId = requestAnimationFrame(updateProgressBar);
+    }
+
+    function startProgressLoop() {
+      if (progressRafId) cancelAnimationFrame(progressRafId);
+      progressRafId = requestAnimationFrame(updateProgressBar);
+    }
+
+    function stopProgressLoop() {
+      if (progressRafId) {
+        cancelAnimationFrame(progressRafId);
+        progressRafId = null;
+      }
+    }
+
+    function stopPlaylistTrack() {
+      clearEndedWatch();
+      stopProgressLoop();
+      if (activePlaylistItem) {
+        resetPlaylistItem(activePlaylistItem);
+        activePlaylistItem = null;
+      }
+      resetThemeColor();
+      crossfadeTo(ORIGINAL_BG_SRC, true);
+    }
+
+    function playPlaylistTrack(item) {
+      const trackSrc = item.dataset.trackSrc;
+      if (!trackSrc) return;
+
+      if (activePlaylistItem && activePlaylistItem !== item) {
+        resetPlaylistItem(activePlaylistItem);
+      }
+
+      clearEndedWatch();
+      activePlaylistItem = item;
+      getDominantColorForItem(item).then((hex) => {
+
+        if (activePlaylistItem === item) applyThemeColor(hex);
+      });
+      crossfadeTo(trackSrc, false);
+      startProgressLoop();
+
+      item.classList.add('is-playing');
+      const btn = item.querySelector('.playlist-play-btn');
+      if (btn) {
+        btn.textContent = '「 Stop 」';
+        btn.classList.add('is-stop-state');
+      }
+
+      endedChannel = activeChannel;
+      endedHandler = () => {
+        if (activePlaylistItem === item && endedChannel === activeChannel) {
+          stopPlaylistTrack();
+        }
+      };
+      endedChannel.addEventListener('ended', endedHandler);
+    }
+
+    document.querySelectorAll('.playlist-item').forEach((item) => {
+      const btn = item.querySelector('.playlist-play-btn');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        flashTap(btn);
+        if (activePlaylistItem === item) {
+          stopPlaylistTrack();
+        } else {
+          playPlaylistTrack(item);
+        }
+      });
+    });
+
+    enterBtn.addEventListener('click', () => {
+      flashTap(enterBtn);
+      hasEntered = true;
+      splashScreen.classList.add('hidden');
+      mainContent.classList.add('visible');
+      safePlayAudio();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!activeChannel) return;
+      if (document.hidden) {
+        activeChannel.pause();
+      } else if (hasEntered) {
+        safePlayAudio();
+      }
+    });
+
+    const birthDate = new Date('2008-05-15');
+    const today = new Date();
+    let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      calculatedAge--;
+    }
+    const ageElement = document.getElementById('user-age');
+    if (ageElement) {
+      ageElement.textContent = calculatedAge;
+    }
+
+    const nextInput = contactForm.querySelector('input[name="_next"]');
+    if (nextInput) {
+      nextInput.value = window.location.href;
+    }
+    const senderIdInput = contactForm.querySelector('input[name="sender_id"]');
+
+
+    const fileUpload = document.getElementById('file-upload');
+    const fileStatusDisplay = document.getElementById('file-status-display');
+    const attachmentLabel = document.getElementById('attachment-label');
+    const filePreviewContainer = document.getElementById('file-preview-container');
+    const filePreviewImg = document.getElementById('file-preview-img');
+    const filePreviewPlaceholder = document.getElementById('file-preview-placeholder');
+    const textareaWrapper = document.getElementById('textarea-wrapper');
+
+    let fileOversized = false;
+
+    function setFileErrorState(isError) {
+      fileOversized = isError;
+      attachmentLabel.classList.toggle('file-error', isError);
+      filePreviewContainer.classList.toggle('file-error', isError);
+    }
+
+    const CONTACT_GATE_URL = 'https://contact-gate.trilliance.workers.dev/';
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    const PREVIEW_MAX_DIMENSION = 260;
+
+    function drawThumbnailCanvas(source, sourceWidth, sourceHeight) {
+      const scale = Math.min(1, PREVIEW_MAX_DIMENSION / Math.max(sourceWidth, sourceHeight));
+      const targetWidth = Math.max(1, Math.round(sourceWidth * scale));
+      const targetHeight = Math.max(1, Math.round(sourceHeight * scale));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
+      ctx.drawImage(source, 0, 0, targetWidth, targetHeight);
+      return canvas.toDataURL('image/jpeg', 0.7);
+    }
+
+    function createPreviewThumbnailFromImageEl(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+
+        img.onload = () => {
+          const dataUrl = drawThumbnailCanvas(img, img.naturalWidth, img.naturalHeight);
+          URL.revokeObjectURL(objectUrl);
+          resolve(dataUrl);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Could not load image for preview'));
+        };
+
+        img.src = objectUrl;
+      });
+    }
+
+    function createPreviewThumbnail(file) {
+      if (window.createImageBitmap) {
+        return createImageBitmap(file, { resizeWidth: PREVIEW_MAX_DIMENSION, resizeQuality: 'medium' })
+          .then((bitmap) => {
+            const dataUrl = drawThumbnailCanvas(bitmap, bitmap.width, bitmap.height);
+            bitmap.close();
+            return dataUrl;
+          })
+          .catch(() => createPreviewThumbnailFromImageEl(file));
+      }
+      return createPreviewThumbnailFromImageEl(file);
+    }
+
+    function createVideoPreviewThumbnail(file) {
+      return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.muted = true;
+        video.playsInline = true;
+
+        const videoUrl = URL.createObjectURL(file);
+        video.src = videoUrl;
+
+        video.addEventListener('loadedmetadata', () => {
+
+          video.currentTime = Math.min(1, video.duration / 2);
+        });
+
+        video.addEventListener('seeked', () => {
+
+          setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 180;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            URL.revokeObjectURL(videoUrl);
+            resolve(dataUrl);
+          }, 150);
+        });
+
+        video.addEventListener('error', () => {
+          URL.revokeObjectURL(videoUrl);
+          reject(new Error('Failed to load video file for thumbnail generation'));
+        });
+      });
+    }
+    function resetAttachmentUI() {
+      fileUpload.value = '';
+      fileStatusDisplay.textContent = '';
+      fileStatusDisplay.classList.remove('active', 'closing');
+      attachmentLabel.classList.remove('has-file');
+      attachmentLabel.textContent = '「 Attach File 」';
+      filePreviewContainer.classList.remove('active', 'closing');
+      filePreviewImg.src = '';
+      filePreviewImg.style.display = 'none';
+      filePreviewPlaceholder.style.display = 'none';
+      setFileErrorState(false);
+    }
+
+    function submitFormViaHiddenFrame() {
+      return new Promise((resolve) => {
+        const frame = document.getElementById('formsubmit-frame');
+        let settled = false;
+
+        const finish = (succeeded) => {
+          if (settled) return;
+          settled = true;
+          frame.removeEventListener('load', onLoad);
+          resolve(succeeded);
+        };
+
+        const onLoad = () => {
+          let succeeded = false;
+          try {
+
+            succeeded = frame.contentWindow.location.origin === window.location.origin;
+          } catch (e) {
+            succeeded = false;
+          }
+          finish(succeeded);
+        };
+
+        frame.addEventListener('load', onLoad);
+        setTimeout(() => finish(false), 20000);
+
+        contactForm.target = 'formsubmit-frame';
+        contactForm.submit();
+      });
+    }
+
+    msgSubmitBtn.addEventListener('click', () => flashTap(msgSubmitBtn));
+
+
+    attachmentLabel.addEventListener('click', (e) => {
+      flashTap(attachmentLabel);
+      if (attachmentLabel.classList.contains('has-file')) {
+        e.preventDefault();
+
+
+        filePreviewContainer.classList.add('closing');
+        fileStatusDisplay.classList.add('closing');
+
+        setTimeout(() => {
+          fileUpload.value = '';
+          fileStatusDisplay.textContent = '';
+          fileStatusDisplay.classList.remove('active', 'closing');
+          attachmentLabel.classList.remove('has-file');
+          attachmentLabel.textContent = '「 Attach File 」';
+          filePreviewContainer.classList.remove('active', 'closing');
+          setFileErrorState(false);
+        }, 200);
+      }
+    });
+
+    fileUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+
+
+      filePreviewContainer.classList.remove('active', 'closing');
+      fileStatusDisplay.classList.remove('active', 'closing');
+      void filePreviewContainer.offsetWidth;
+      void fileStatusDisplay.offsetWidth;
+
+      if (file) {
+        const isOversized = file.size > MAX_FILE_SIZE;
+        formStatus.textContent = '';
+
+        setFileErrorState(isOversized);
+
+        fileStatusDisplay.textContent = isOversized
+          ? `File exceeds 10MB limit: ${file.name}`
+          : `Attached: ${file.name}`;
+        afterNextPaint(() => fileStatusDisplay.classList.add('active'));
+        attachmentLabel.classList.add('has-file');
+        attachmentLabel.textContent = '「 Remove File 」';
+
+        {
+
+          const btnWidth = attachmentLabel.offsetWidth;
+          if (btnWidth > 0) {
+            filePreviewContainer.style.width = `${btnWidth}px`;
+          }
+
+          if (file.type.startsWith('image/')) {
+            createPreviewThumbnail(file)
+              .then((thumbDataUrl) => {
+                filePreviewImg.src = thumbDataUrl;
+                const showPreview = () => {
+                  filePreviewImg.style.display = 'block';
+                  filePreviewPlaceholder.style.display = 'none';
+                  afterNextPaint(() => filePreviewContainer.classList.add('active'));
+                };
+                if (filePreviewImg.decode) {
+                  filePreviewImg.decode().then(showPreview).catch(showPreview);
+                } else {
+                  showPreview();
+                }
+              })
+              .catch(() => {
+
+                filePreviewImg.style.display = 'none';
+                filePreviewPlaceholder.style.display = 'flex';
+                afterNextPaint(() => filePreviewContainer.classList.add('active'));
+              });
+          } else if (file.type.startsWith('video/')) {
+            createVideoPreviewThumbnail(file)
+              .then((thumbDataUrl) => {
+                filePreviewImg.src = thumbDataUrl;
+                const showPreview = () => {
+                  filePreviewImg.style.display = 'block';
+                  filePreviewPlaceholder.style.display = 'none';
+                  afterNextPaint(() => filePreviewContainer.classList.add('active'));
+                };
+                if (filePreviewImg.decode) {
+                  filePreviewImg.decode().then(showPreview).catch(showPreview);
+                } else {
+                  showPreview();
+                }
+              })
+              .catch(() => {
+                filePreviewImg.style.display = 'none';
+                filePreviewPlaceholder.style.display = 'flex';
+                afterNextPaint(() => filePreviewContainer.classList.add('active'));
+              });
+          } else {
+
+            filePreviewImg.style.display = 'none';
+            filePreviewPlaceholder.style.display = 'flex';
+            afterNextPaint(() => filePreviewContainer.classList.add('active'));
+          }
+        }
+      } else {
+        fileStatusDisplay.textContent = '';
+        fileStatusDisplay.classList.remove('active', 'closing');
+        attachmentLabel.classList.remove('has-file');
+        attachmentLabel.textContent = '「 Attach File 」';
+        setFileErrorState(false);
+      }
+    });
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (msgSubmitBtn.disabled) return;
+
+      let hasValidationError = false;
+
+      if (!msgSubject.value.trim()) {
+        flashFieldError(msgSubject);
+        hasValidationError = true;
+      }
+
+      if (!messageText.value.trim()) {
+        flashFieldError(textareaWrapper);
+        hasValidationError = true;
+      }
+
+      if (fileOversized) {
+        hasValidationError = true;
+      }
+
+      if (hasValidationError) {
+        formStatus.textContent = fileOversized
+          ? 'Remove the oversized attachment before sending.'
+          : 'Subject and Message Fields are required.';
+        return;
+      }
+
+      msgSubmitBtn.disabled = true;
+      msgSubmitBtn.textContent = '「 Sending... 」';
+      formStatus.textContent = '';
+
+      getFingerprint()
+        .catch(() => '')
+        .then(fp => fetch(CONTACT_GATE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fp }),
+        }))
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'ok') {
+            if (senderIdInput) senderIdInput.value = data.id || '';
+            submitFormViaHiddenFrame().then((succeeded) => {
+              if (succeeded) {
+                formStatus.textContent = 'Message sent successfully. I’ll make sure to read it.';
+                messageText.value = '';
+                if (msgSubject) msgSubject.value = '';
+                resetAttachmentUI();
+              } else {
+                formStatus.textContent = 'Unable to send right now. Try again later.';
+              }
+              msgSubmitBtn.disabled = false;
+              msgSubmitBtn.textContent = '「 Send 」';
+            });
+            return;
+          }
+          formStatus.textContent = data.message || 'Unable to send right now. Try again later.';
+          msgSubmitBtn.disabled = false;
+          msgSubmitBtn.textContent = '「 Send 」';
+        })
+        .catch(err => {
+          console.warn('Send-gate error:', err);
+          formStatus.textContent = 'Error checking send status. Try again later.';
+          msgSubmitBtn.disabled = false;
+          msgSubmitBtn.textContent = '「 Send 」';
+        });
+    });
+
+    if (urlParams.get('admin') === '1') {
+      safeStorage.setItem('exclude_from_counter', 'true');
+    }
+
+    const isOwner = safeStorage.exclude_from_counter === 'true' || safeStorage.getItem('exclude_from_counter') === 'true';
+    const countElement = document.getElementById('visit-count');
+    const WORKER_URL = 'https://tight-disk-1a4b.trilliance.workers.dev/';
+
+    const fetchUrl = isOwner ? `${WORKER_URL}?nocount=1` : WORKER_URL;
+
+    fetch(fetchUrl)
+      .then(res => {
+        if (!res.ok) throw new Error('Worker network response was not ok');
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.count !== undefined) {
+          countElement.textContent = Number(data.count).toLocaleString();
+        }
+      })
+      .catch(err => {
+        console.warn('Counter error:', err);
+        countElement.textContent = '143+';
+      });
+  });
+</script>
+
+</body>
+</html>
